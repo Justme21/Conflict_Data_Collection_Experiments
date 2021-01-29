@@ -19,7 +19,7 @@ def load(filename):
     return {'uh': asarray(uh), 'ur': asarray(ur), 'xh': asarray(xh), 'xr': asarray(xr), 't': t}
 
 def isempty(data):
-    return all([len(y)==0 for y in data.values()])
+    return all([len(y)==0 for y in list(data.values())])
 
 csvs = [[], [], []]
 

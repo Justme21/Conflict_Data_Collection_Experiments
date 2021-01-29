@@ -3,8 +3,8 @@ import theano.tensor as tt
 
 class Dynamics(object):
     def __init__(self, nx, nu, f, dt=None):
-        self.nx = nx
-        self.nu = nu
+        self.nx = nx #number of state dimensions
+        self.nu = nu #number of action dimensions
         self.dt = dt
         if dt is None:
             self.f = f
@@ -14,14 +14,16 @@ class Dynamics(object):
         return self.f(x, u)
 
 class CarDynamics(Dynamics):
-    def __init__(self, dt=0.1, ub=[(-3., 3.), (-1., 1.)], friction=1.):
+    def __init__(self, dt=0.1, Lf=1.11, Lr=1.61, friction=0):
         def f(x, u):
+            slip_angle = tt.arctan(tt.tan(u[1])*Lr/(Lr+Lf))
             return tt.stacklists([
-                x[3]*tt.cos(x[2]),
-                x[3]*tt.sin(x[2]),
-                x[3]*u[0],
-                u[1]-x[3]*friction
+                x[2]*tt.cos(x[3]+slip_angle),
+                -x[2]*tt.sin(x[3]+slip_angle),
+                u[0]-x[2]*friction,
+                (x[2]/Lr)*tt.sin(slip_angle)
             ])
+        #4 = dimension of state, 2 = dimension of action
         Dynamics.__init__(self, 4, 2, f, dt)
 
 if __name__ == '__main__':

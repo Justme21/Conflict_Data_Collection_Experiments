@@ -33,7 +33,7 @@ def run_irl(world, car, reward, theta, data):
         pass
     optimizer = utils.Maximizer(L, [theta], gen=gen, method='gd', eps=0.1, debug=True, iters=1000, inf_ignore=10)
     optimizer.maximize()
-    print theta.get_value()
+    print(theta.get_value())
 
 
 if __name__ == '__main__':
