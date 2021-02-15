@@ -6,6 +6,7 @@ import linear_controller_classes as lcc
 import math
 import pdb
 import simulator
+import tkinter as tk
 import vehicle_classes
 import road_classes
 
@@ -95,7 +96,11 @@ def andTrigger(triggers):
 
 def changeController(car,tag):
     def f():
+        old_controller = car.controller
         car.setController(tag=tag)
+        #Transfer log from old controller to new so they seem like a single contiuous controller
+        new_controller = car.controller
+        new_controller.log = list(old_controller.log)
 
     return f
 
@@ -114,10 +119,12 @@ def fixHeading(car):
 
 #####################################################################################################################
 
-if __name__ == "__main__":
+def runExperiment(lane_keeper_type,lane_changer_type):
     #debug mode
     debug = False
 
+    ##########################################################################################
+    #Setting Up Simulation
     #Vehicle Dimensions
     lane_width = 5
     veh_length = 4.6
@@ -149,7 +156,12 @@ if __name__ == "__main__":
     lane_keeper.initialisation_params["heading"] = lane_keeper.heading
     lane_keeper.sense()
 
+    ###########################################################################################
+    #Set up text box
 
+
+    ###########################################################################################
+    #Setting up Controllers for Lane Changing Vehicle
     #First Lane Change Controller: Try lane change
     right_lane_state = lane_keeper.state.copy() #lane keeper is initially centred in the right lane
 
@@ -179,9 +191,11 @@ if __name__ == "__main__":
     rlc_controller.controller = LaneChangeController(ego=lane_changer,other=None,timestep=dt,speed_limit=speed_limit,accel_range=accel_range,dest_state=left_lane_state,axle_length=axle_length,T=rlcT)
     lane_changer.addControllers({"reverse_lane_change":rlc_controller})
 
-    risk_radius = veh_width
-    reverse_lane_change_trigger = andTrigger([onLaneTrigger(lane_changer,lane_keeper), relativeXRadiusTrigger(lane_changer,lane_keeper,veh_length,'<')]) #passive
-    #reverse_lane_change_trigger = andTrigger([radiusTrigger(lane_changer,lane_keeper,risk_radius), relativeXRadiusTrigger(lane_changer,lane_keeper,veh_length,'<')]) #aggressive
+    if lane_changer_type == "aggressive":
+        risk_radius = veh_width
+        reverse_lane_change_trigger = andTrigger([radiusTrigger(lane_changer,lane_keeper,risk_radius), relativeXRadiusTrigger(lane_changer,lane_keeper,veh_length,'<')]) #aggressive
+    else:
+        reverse_lane_change_trigger = andTrigger([onLaneTrigger(lane_changer,lane_keeper), relativeXRadiusTrigger(lane_changer,lane_keeper,veh_length,'<')]) #passive
     reverse_lane_change_consequent = changeController(lane_changer,"reverse_lane_change")
 
     #Fourth Lane Change Controller: Lane Change Behind
@@ -204,15 +218,9 @@ if __name__ == "__main__":
 
     sim.runComplete()
 
-    import pdb
-    pdb.set_trace()
+    #import pdb
+    #pdb.set_trace()
 
-
-    #Here I am
-    # To Do:
-    #    i. Include final crash and on_road state to text output
-    #   ii. Include passive vs. aggressive label for each car
-    #  iii. Figure out how to record log from lane changing car in this setting. 
 
     #Extract log of behaviours from controller
     num_cars = 2
@@ -243,10 +251,22 @@ if __name__ == "__main__":
     results.write("speed_limit: {}\n\n".format(speed_limit))
 
     #Behaviour being modelled/learnt put in first
+    results.write("Type: {}\n".format(lane_keeper_type))
+    results.write("On Road: {}\n".format(int(lane_keeper.on_road)))
+    results.write("Crash: {}\n".format(int(lane_keeper.crashed)))
     results.write("States: {}\n".format(lane_keeper_state_list))
     results.write("Actions: {}\n".format(lane_keeper_act_list))
 
     #Behaviour of all other cars goes after
+    results.write("Type: {}\n".format(lane_changer_type))
+    results.write("On Road: {}\n".format(int(lane_changer.on_road)))
+    results.write("Crash: {}\n".format(int(lane_changer.crashed)))
     results.write("States: {}\n".format(lane_changer_state_list))
     results.write("Actions: {}\n".format(lane_changer_act_list))
     results.close()
+
+if __name__ == "__main__":
+    lane_keeper_type = "aggressive" #(aggressive/passive) This dictates the instruction to be provided
+    lane_changer_type = "passive" #(aggressive/passive)
+
+    runExperiment(lane_keeper_type,lane_changer_type)

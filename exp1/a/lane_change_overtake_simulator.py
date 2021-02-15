@@ -69,13 +69,17 @@ def radiusTrigger(ego_car,trigger_car,radius):
 
 def changeController(car,tag):
     def f():
+        old_controller = car.controller
         car.setController(tag=tag)
+        #Transfer log from old controller to new so they seem like a single contiuous controller
+        new_controller = car.controller
+        new_controller.log = old_controller.log
 
     return f
 
 #####################################################################################################################
 
-if __name__ == "__main__":
+def runExperiment(lane_changer_type,lane_keeper_type)
     #debug mode
     debug = False
 
@@ -103,8 +107,10 @@ if __name__ == "__main__":
     
     #Needs constant velocity controller AND IDM controller
     #IDM controller
-    #idm_params = {"headway":1.6,"s0":2,"b":3} #passive
-    idm_params = {"headway":0.0,"s0":0,"b":50} #aggressive
+    if lane_keeper_type == "aggressive":
+        idm_params = {"headway":0.0,"s0":0,"b":50} #aggressive
+    else:
+        idm_params = {"headway":1.6,"s0":2,"b":3} #passive
     idm_controller = lcc.DrivingController(controller="idm",ego=lane_keeper,other=lane_changer,timestep=dt,speed_limit=speed_limit,accel_range=accel_range,accel_jerk=accel_jerk,yaw_rate_range=yaw_rate_range,yaw_rate_jerk=yaw_rate_jerk,**idm_params)
     
     #Constant velocity controller
@@ -157,10 +163,22 @@ if __name__ == "__main__":
     results.write("speed_limit: {}\n\n".format(speed_limit))
 
     #Behaviour being modelled/learnt put in first
+    results.write("Type: {}\n".format(lane_changer_type))
+    results.write("On Road: {}\n".format(int(lane_changer.on_road)))
+    results.write("Crash: {}\n".format(int(lane_changer.crashed)))
     results.write("States: {}\n".format(lane_changer_state_list))
     results.write("Actions: {}\n".format(lane_changer_act_list))
 
     #Behaviour of all other cars goes after
+    results.write("Type: {}\n".format(lane_keeper_type))
+    results.write("On Road: {}\n".format(int(lane_keeper.on_road)))
+    results.write("Crash: {}\n".format(int(lane_keeper.crashed)))
     results.write("States: {}\n".format(lane_keeper_state_list))
     results.write("Actions: {}\n".format(lane_keeper_act_list))
     results.close()
+
+if __name__ == "__main__":
+    lane_changer_type = "aggressive" #(aggressive/passive). This dictates the instruction to be provided
+    lane_keeper_type = "aggressive" #(aggressive/passive)
+
+    runExperiment(lane_changer_type,lane_keeper_type)
