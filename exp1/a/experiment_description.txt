@@ -1,0 +1,44 @@
+Experiment 1a: Human Lane Change Data Collection
+
+The purpose of this experiment is to collect data of humans performing lane change in the presence of an autonomous lane-keeping vehicle.
+
+Experimental Setting:
+The human car is initialised in the left/top lane, facing right, travelling at 5m/s. Lane-keeping vehicle is in the adjacent lane, next to the human vehicle, with the same initial speed.
+Both cars have a maximum speed of 5.5m/s and acceleration range [-3m/s^2,3m/s^2].
+The goal of the human vehicle is to complete a lane change. The goal of the autonomous vehicle is to proceed in it's lane.
+
+This experiment has four sub-cases:
+    i. the human is told to complete the objective "as quickly as possible" and the other vehicle is passive/accomodates the lane change.
+   ii. the human is told to complete the objective "safely" and the other vehicle is passive/accomodates the lane change.
+  iii. the human is told to complete the objective "as quickly as possible" and the other vehicle is selfish.
+   iv. the human is told to complete teh objective "safely" and the other vehicle is selfish.
+
+Each sub-case corresonds to a different decision-making combination in the game matrix:
+    i. LCA/GW
+   ii. LCB/GW (conflict)
+  iii. LCA/C (conflict)
+   iv. LCB/C
+
+The Human Controlled Vehicle:
+The human controlled vehicle's behaviour is dictacted by arrow-based controls provided by the human;
+    Pressing and holding the up key causes the car to accelerate,
+    Pressing and holding the down key causes the car to decelerate,
+    Pressing and holding the right key causes the car's heading to turn to the right,
+    Pressing and holding the left key causes the car's heading to turn to the left,
+    Pressing the Space key pauses the run.
+
+The hope is that the directive "as quickly as possible" would induce aggressive behaviour in the lane changing car, as the task is completed quicker if the human lane changes ahead.
+The directive "safely" should induce passive behaviour, as the safer approach is to lane change behhind the car, as there is less risk of crashing. 
+
+The Lane-Keeping Vehicle:
+The lane keeping vehicle's behaviour is triggered by events in the environment; Initially it is controlled by a constant velocity model. If the human controlled vehicle attempts to merge onto the lane ahead of the lane-keeping vehicle,
+it's controller changes to an IDM (Intelligent Driver Model), a car following model. The parameters of this model dictate whether the lane-keeping car will be aggressive or passive;
+    i. if passive then the IDM chooses actions to keep the lane-keeping car a safe distance behind the lane-changing car. Thus the lane-keeping car gives way/slows down/backs up.
+   ii. if aggressive then the IDM attempts to leave no space between the lane-keeping and lane-changing car, so the car will accelerate, preventing the lane-changing car from completing the manoeuvre.
+
+
+The observed trajectories of both vehicles are written to file and stored at the end of the run.
+
+Open Questions:
+    i. Should probably have arbitrary metrics or something to incentivise humans towards their objectives.
+   ii. Do the instructions necessarily produce aggressive/passive behaviour? 
