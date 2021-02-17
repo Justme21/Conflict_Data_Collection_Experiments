@@ -7,11 +7,10 @@ At different points in the experiments you will be required to assume different 
 
 Python 3 is required to run the experiments. To ensure you are able to run all the experiments, please look at the requirements.txt file, to make sure you have all the relevant libraries installed.
 
-In order to familiarise yourself with the simulator controls, feel free to use the sandbox environment provided in sandbox.py.
+In order to familiarise yourself with the simulator controls, feel free to use the sandbox environment provided in sandbox.py (run using the terminal command 'python sandbox.py')
 This is a 2-lane highway environment with a stationary car to navigate around.
 No data is stored from executions on the sandbox. The scenario will restart until you are close the window, so take as long as you need to get comfortable with the controls.
 Once you are ready to continue, close the sandbox window. 
-
 
 In total you are participating in 2 experiments, labelled "exp1" and "exp2"
 Experiment 1 (exp1) examines different ways a lane change can be executed. This experiment has two parts:
@@ -21,8 +20,14 @@ Experiment 1 (exp1) examines different ways a lane change can be executed. This 
 Each sub-experiment is in a different directory, and details regarding each sub-experiment can be found in .txt files found in the relevant directories.
 This experiment will involve repeated executions of each scenario, subject to changing sub-objectives (see the relevant .txt files for more information).
 
+To access these experiments move to the 'exp1' directory, and then into the 'a' and 'b' sub-directories. In each sub-directory there is a .txt file providing instructions on what the experiment entails,
+and a .py file that contains the experiment code. After reading the .txt file, run the .py file using the command 'python <filename>.py'
+
 Experiment 2 (exp2) examines how sub-objectives affect manoeuvre execution, and details regarding this experiment can be found in a .txt file in the exp2 directory.
 This experiment will involve a single execution of each scenario, subject to changing sub-objecives (see the relevant .txt file for more information).
+
+To access this experiments move to the 'exp2' directory. In this directory there is a .txt file providing instructions on what the experiment entails,
+and a .py file that contains the experiment code. After reading the .txt file, run the .py file using the command 'python <filename>.py'
 
 You MUST complete Experiment 1 BEFORE doing Experiment 2.
 You do not need to do exp1a,exp1b and exp2 in the same sitting, and a break to recharge between experiment sections is permitted.
