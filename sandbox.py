@@ -23,14 +23,14 @@ def initialiseSimulator(cars,speed_limit,init_speeds=None,vehicle_spacing=3,lane
     else:
         car_speeds = init_speeds
 
-    num_junctions = 3
-    num_roads = 2
-    road_angles = [0,0]
-    road_lengths = [5,100] #Shorter track for generating results
-    junc_pairs = [(0,1),(1,2)]
+    num_junctions = 5
+    num_roads = 4
+    road_angles = [0,0,0,0]
+    road_lengths = [5,45,5,45] #Shorter track for generating results
+    junc_pairs = [(0,1),(1,2),(2,3),(3,4)]
 
-    starts = [[(0,1),1],[(0,1),0]] #Follower car is initialised on the first road, leading car on the 3rd (assuring space between them)
-    dests = [[(1,2),1],[(1,2),1]] #Simulation ends when either car passes the end of the 
+    starts = [[(0,1),1],[(2,3),0]] #Follower car is initialised on the first road, leading car on the 3rd (assuring space between them)
+    dests = [[(3,4),1],[(3,4),1]] #Simulation ends when either car passes the end of the 
 
     run_graphics = True
     draw_traj = False #trajectories are uninteresting by deafault
@@ -161,8 +161,6 @@ def runExperiment():
     #Initialise Simulator here becayse need state definition
     sim = initialiseSimulator([lane_changer,lane_keeper],speed_limit,init_speeds=[5,0],lane_width=lane_width,dt=dt,debug=debug)
 
-    lane_keeper.x_com += 50
-    lane_keeper.initialisation_params["prev_disp_y"]+=50
     lane_keeper.heading = (lane_keeper.heading+180)%360
     lane_keeper.initialisation_params["heading"] = lane_keeper.heading
     lane_keeper.sense()
@@ -191,7 +189,7 @@ def runExperiment():
     
     #########################################################################################
     #Run Experiments
-    while True
+    while True:
          ######################################################################
         #Set Graphic Simulator triggers
         triggers = {trueFunc:write_instructions}

@@ -3,6 +3,9 @@ Thank you for agreeing to help me generate data for my work. Your cooperation is
 In experiment 1, which you should have completed before starting this experiment, I was gathering data about aggressiveness vs. passiveness in driving. 
 One of the sub-objectives was chosen to result in more "aggressive" driving behaviour, and the other more "passive" behaviour.
 The other car also behaved according to either an "aggressive" model or a "passive" model.
+
+In this experiment you start in the top lane, driving the pink car. The car in the bottom lane will stay in it's lane.
+
 In this experiment you will be told in advance how the other car has been programmed to behave. It will either:
     - follow a model that is more aggressive than the behaviour you have previously demonstrated, or
     - follow a model that is less aggressive than the behaviour you have previously demonstrated.

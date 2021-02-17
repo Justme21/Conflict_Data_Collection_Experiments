@@ -270,7 +270,7 @@ def runExperiment(experiment_order):
 
         #Behaviour of all other cars goes after
         results.write("\nOther\n")
-        results.write("Type: {}\n".format(lane_keeper_type))
+        #results.write("Type: {}\n".format(lane_keeper_type))
         results.write("On Road: {}\n".format(int(lane_keeper.on_road)))
         results.write("Crash: {}\n".format(int(lane_keeper.crashed)))
         results.write("States: {}\n".format(lane_keeper_state_list))
