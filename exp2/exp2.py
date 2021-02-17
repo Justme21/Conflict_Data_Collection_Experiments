@@ -216,15 +216,22 @@ def runExperiment(experiment_order):
 
     #########################################################################################
     #Run Experiments
-    for i,lane_changer_type in enumerate(experiment_order):
+    for i,(lane_keeper_type,lane_changer_type) in enumerate(experiment_order):
         lane_keeper.addControllers({"idm":passive_idm_controller})
 
         ######################################################################
         #Set Graphic Simulator triggers
-        if lane_changer_type == "aggressive":
-            directive = "The other car is less aggressive than you are"
+        if lane_keeper_type == "aggressive":
+            if lane_changer_type == "aggressive":
+                directive = "The other car is less aggressive than you are"
+            else:
+                directive = "The other car is more aggressive than you are"
         else:
-            directive = "The other car is more aggressive than you are"
+            if lane_changer_type == "aggressive":
+                directive = "The other car is less passive than you are"
+            else:
+                directive = "The other car is more passive than you are"
+
 
         write_task  = writeText(screen,[directive],(int(w/2),int(h/3)+2*(font_size+space_size)),font_size,space_size)
 
@@ -283,9 +290,11 @@ def runExperiment(experiment_order):
 
 if __name__ == "__main__":
     num_observations = 1
-    lane_changer_type = ["passive","aggressive"]#(aggressive/passive)
+    lane_changer_type = ["passive","aggressive","passive","aggressive"]#(aggressive/passive)
+    lane_changer_type = ["passive","passive","aggressive","aggressive"]#(aggressive/passive)
 
-    experiment_types = lane_changer_type
+    experiment_types = list(zip(lane_keeper_type,lane_changer_type))
+    experiment_order = random.sample(experiment_types,len(experiment_types))
 
     experiment_order = random.sample(experiment_types,len(experiment_types))
 
