@@ -282,7 +282,7 @@ def runExperiment(experiment_order):
             score_function = timeCost(lane_keeper,dt,init_score)
         else:
             #directive = "Stay in lane as safely as possible"
-            directive = "Drive as if on a leisurely drive and change lanes"
+            directive = "Drive considerately and change lanes"
             score_function = distanceCost(lane_keeper,lane_changer,init_score,veh_length)
 
         write_task  = writeText(screen,[iteration_count,directive],(int(w/2),int(h/5)),font_size,space_size)

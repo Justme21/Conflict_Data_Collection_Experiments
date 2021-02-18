@@ -341,7 +341,7 @@ def runExperiment(experiment_order):
             directive = "Drive as if in a rush and stay in your lane"
             score_function = timeCost(lane_keeper,dt,init_score)
         else:
-            directive = "Drive as if on a leisurely drive and stay in your lane"
+            directive = "Drive considerately and stay in your lane"
             score_function = distanceCost(lane_keeper,lane_changer,init_score,veh_length)
         
         write_task  = writeText(screen,[iteration_count,directive],(int(w/2),int(h/5)),font_size,space_size)
