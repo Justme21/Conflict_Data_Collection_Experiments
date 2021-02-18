@@ -1,3 +1,6 @@
+Experiment 1a
+=============
+
 Thank you for agreeing to help me generate data for my work. Your cooperation is greatly appreciated.
 
 In this experiment you start in the top lane, driving the pink car. The car in the bottom lane will stay in its lane.
