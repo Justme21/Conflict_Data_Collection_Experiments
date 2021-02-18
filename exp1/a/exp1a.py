@@ -274,17 +274,19 @@ def runExperiment(experiment_order):
         #Set Graphic Simulator triggers
         cur_score = init_score
 
+        iteration_count = "Round: {}/{}".format(i+1,len(experiment_order))
+
         if lane_keeper_type == "aggressive":
             #directive = "Get to the end of the lane as quickly as possible"
-            directive = "Drive as if you are in a rush and change lanes"
+            directive = "Drive as if in a rush and change lanes"
             score_function = timeCost(lane_keeper,dt,init_score)
         else:
             #directive = "Stay in lane as safely as possible"
-            directive = "Drive as if you were on a leisurely drive and change lanes"
+            directive = "Drive as if on a leisurely drive and change lanes"
             score_function = distanceCost(lane_keeper,lane_changer,init_score,veh_length)
 
-        write_task  = writeText(screen,[directive],(int(w/2),int(h/5)),font_size,space_size)
-        write_score = writeScore(screen,score_function,(int(w/2),int(h/5)+(font_size+space_size)),font_size,space_size)
+        write_task  = writeText(screen,[iteration_count,directive],(int(w/2),int(h/5)),font_size,space_size)
+        write_score = writeScore(screen,score_function,(int(w/2),int(h/5)+2*(font_size+space_size)),font_size,space_size)
 
         triggers = {trueFunc:write_instructions,trueFunc1:write_score,trueFunc2:write_task}
         g_sim.triggers = {}

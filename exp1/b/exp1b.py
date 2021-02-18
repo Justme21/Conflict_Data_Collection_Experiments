@@ -255,7 +255,7 @@ def runExperiment(experiment_order):
 
     screen = sim.g_sim.screen #This is messy, but the best way to get this I think
     font_size = 40
-    space_size = 15
+    space_size = 10
 
     instructions = ["-Press and hold UP arrow to accelerate","-Press and hold DOWN arrow to decelerate","-Press and hold the LEFT arrow to turn anti-clockwise","-Press and hold RIGHT arrow to turn clockwise","-Press SPACE to pause simulation"]
     write_instructions = writeText(screen,instructions,(0,int(h/5)),font_size,space_size)
@@ -333,16 +333,18 @@ def runExperiment(experiment_order):
         #Set Graphic Simulator triggers
         cur_score = init_score
 
+        iteration_count = "Round: {}/{}".format(i+1,len(experiment_order))
+
         if lane_keeper_type == "aggressive":
             #idirective = "Get to the end of the lane as quickly as possible"
-            directive = "Drive as if you are in a rush and stay in your lane"
+            directive = "Drive as if in a rush and stay in your lane"
             score_function = timeCost(lane_keeper,dt,init_score)
         else:
-            directive = "Drive as if you were on a leisurely drive and stay in your lane"
+            directive = "Drive as if on a leisurely drive and stay in your lane"
             score_function = distanceCost(lane_keeper,lane_changer,init_score,veh_length)
         
-        write_task  = writeText(screen,[directive],(int(w/2),int(h/5)),font_size,space_size)
-        write_score = writeScore(screen,score_function,(int(w/2),int(h/5)+(font_size+space_size)),font_size,space_size)
+        write_task  = writeText(screen,[iteration_count,directive],(int(w/2),int(h/5)),font_size,space_size)
+        write_score = writeScore(screen,score_function,(int(w/2),int(h/5)+2*(font_size+space_size)),font_size,space_size)
         
         triggers = {trueFunc:write_instructions,trueFunc1:write_score,trueFunc2:write_task}
         g_sim.triggers = {}
@@ -406,7 +408,7 @@ if __name__ == "__main__":
 
     experiment_types = list(zip(lane_keeper_type,lane_changer_type))
 
-    #experiment_order = random.sample(experiment_types,len(experiment_types))
-    experiment_order = [("aggressive","passive")] #(lane_keeper,lane_changer)
+    experiment_order = random.sample(experiment_types,len(experiment_types))
+    #experiment_order = [("aggressive","passive")] #(lane_keeper,lane_changer)
 
     runExperiment(experiment_order)

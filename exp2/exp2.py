@@ -180,7 +180,7 @@ def runExperiment(experiment_order):
 
     screen = sim.g_sim.screen #This is messy, but the best way to get this I think
     font_size = 40
-    space_size = 15
+    space_size = 10
 
     instructions = ["-Press and hold UP arrow to accelerate","-Press and hold DOWN arrow to decelerate","-Press and hold the LEFT arrow to turn anti-clockwise","-Press and hold RIGHT arrow to turn clockwise","-Press SPACE to pause simulation"]
     write_instructions = writeText(screen,instructions,(0,int(h/5)),font_size,space_size)
@@ -221,6 +221,8 @@ def runExperiment(experiment_order):
 
         ######################################################################
         #Set Graphic Simulator triggers
+        iteration_count = "Round : {}/{}".format(i+1,len(experiment_order))
+
         if lane_keeper_type == "aggressive":
             if lane_changer_type == "aggressive":
                 directive = "The other car is less aggressive than you are"
@@ -233,7 +235,7 @@ def runExperiment(experiment_order):
                 directive = "The other car is more passive than you are"
 
 
-        write_task  = writeText(screen,[directive],(int(w/2),int(h/5)),font_size,space_size)
+        write_task  = writeText(screen,[iteration_count,directive],(int(w/2),int(h/5)),font_size,space_size)
 
         triggers = {trueFunc:write_instructions,trueFunc2:write_task}
         g_sim.triggers = {}
@@ -289,13 +291,10 @@ def runExperiment(experiment_order):
 
 
 if __name__ == "__main__":
-    num_observations = 1
-    lane_changer_type = ["passive","aggressive","passive","aggressive"]#(aggressive/passive)
-    lane_changer_type = ["passive","passive","aggressive","aggressive"]#(aggressive/passive)
+    lane_changer_type = ["passive","aggressive","passive","aggressive"]
+    lane_changer_type = ["passive","passive","aggressive","aggressive"]
 
     experiment_types = list(zip(lane_keeper_type,lane_changer_type))
-    experiment_order = random.sample(experiment_types,len(experiment_types))
-
     experiment_order = random.sample(experiment_types,len(experiment_types))
 
     runExperiment(experiment_order)
