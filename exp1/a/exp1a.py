@@ -311,7 +311,7 @@ def runExperiment(experiment_order):
         lane_changer_state_list = [(x[0]["position"][0],x[0]["position"][1],x[0]["velocity"],math.radians(x[0]["heading"])) for x in lane_changer_log_list]
         lane_changer_act_list = [(x[1][0],math.radians(x[1][1])) for x in lane_changer_log_list]
 
-        results = open("{}/lane_change_results-{}.txt".format(DATA_ADDRESS,exp_start_time,i),"w")
+        results = open("{}/lane_change_results-{}-{}.txt".format(DATA_ADDRESS,exp_start_time,i),"w")
         results.write("num_cars: {}\n".format(num_cars))
         results.write("lane_width: {}\n".format(lane_width))
         results.write("veh_length: {}\n".format(veh_length))
