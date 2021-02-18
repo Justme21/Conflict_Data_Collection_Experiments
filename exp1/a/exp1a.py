@@ -167,10 +167,6 @@ def trueFunc():
     return True
 
 
-def trueFunc1():
-    return trueFunc()
-
-
 def trueFunc2():
     return trueFunc()
 
@@ -290,9 +286,8 @@ def runExperiment(experiment_order):
             score_function = distanceCost(lane_keeper,lane_changer,init_score,veh_length)
 
         write_task  = writeText(screen,[iteration_count,directive],(int(w/2),int(h/5)),font_size,space_size)
-        write_score = writeScore(screen,score_function,(int(w/2),int(h/5)+2*(font_size+space_size)),font_size,space_size)
 
-        triggers = {trueFunc:write_instructions,trueFunc1:write_score,trueFunc2:write_task}
+        triggers = {trueFunc:write_instructions,trueFunc2:write_task}
         g_sim.triggers = {}
         g_sim.addTriggers(triggers)
 
