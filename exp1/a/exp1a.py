@@ -16,7 +16,7 @@ DATA_ADDRESS = "../../results/exp1/a"
 
 cur_score = None
 
-def initialiseSimulator(cars,speed_limit,init_speeds=None,vehicle_spacing=3,lane_width=None,dt=.1,debug=False):
+def initialiseSimulator(cars,speed_limit,init_speeds=None,vehicle_spacing=3,lane_width=None,dt=.1,graphic_position=None,graphic_dimensions=None,debug=False):
     """Takes in a list of cars and a boolean indicating whether to produce graphics.
        Outputs the standard straight road simulator environment with the input cars initialised
        on the map with the first car (presumed ego) ahead of the second"""
@@ -41,7 +41,7 @@ def initialiseSimulator(cars,speed_limit,init_speeds=None,vehicle_spacing=3,lane
     runtime = 120.0 #max runtime; simulation will terminate if run exceeds this length of time
 
     #Initialise the simulator object, load vehicles into the simulation, then initialise the action simulation
-    sim = simulator.Simulator(run_graphics,draw_traj,runtime,debug,dt=dt)
+    sim = simulator.Simulator(run_graphics,draw_traj,runtime,debug,dt=dt,graphic_position=graphic_position,graphic_dimensions=graphic_dimensions)
     sim.loadCars(cars)
 
     sim.initialiseSimulator(num_junctions,num_roads,road_angles,road_lengths,junc_pairs,\
@@ -209,7 +209,11 @@ def runExperiment(experiment_order):
     
     #################################################################################
     #Initialise Simulator here becayse need state definition
-    sim = initialiseSimulator([lane_changer,lane_keeper],speed_limit,init_speeds=[5,5],lane_width=lane_width,dt=dt,debug=debug)
+    #w,h = pyautogui.size()
+    w,h = 1024,768
+    graphic_position = (0,0)
+    graphic_dimensions = (w,h)
+    sim = initialiseSimulator([lane_changer,lane_keeper],speed_limit,init_speeds=[5,5],lane_width=lane_width,dt=dt,graphic_position=graphic_position,graphic_dimensions=graphic_dimensions,debug=debug)
 
     lane_keeper.heading = (lane_keeper.heading+180)%360
     lane_keeper.initialisation_params["heading"] = lane_keeper.heading
@@ -226,7 +230,7 @@ def runExperiment(experiment_order):
     g_sim = sim.g_sim
 
     screen = sim.g_sim.screen #This is messy, but the best way to get this I think
-    font_size = 40
+    font_size = 25
     space_size = 10
 
     instructions = ["-Press and hold UP arrow to accelerate","-Press and hold DOWN arrow to decelerate","-Press and hold the LEFT arrow to turn anti-clockwise","-Press and hold RIGHT arrow to turn clockwise","-Press SPACE to pause simulation"]
@@ -285,8 +289,8 @@ def runExperiment(experiment_order):
             directive = "Drive as if on a leisurely drive and change lanes"
             score_function = distanceCost(lane_keeper,lane_changer,init_score,veh_length)
 
-        write_task  = writeText(screen,[iteration_count,directive],(int(w/2),int(h/5)),font_size,space_size)
-        write_score = writeScore(screen,score_function,(int(w/2),int(h/5)+2*(font_size+space_size)),font_size,space_size)
+        write_task  = writeText(screen,[iteration_count,directive],(int(w/3),int(h/5)),font_size,space_size)
+        write_score = writeScore(screen,score_function,(int(w/3),int(h/5)+2*(font_size+space_size)),font_size,space_size)
 
         triggers = {trueFunc:write_instructions,trueFunc1:write_score,trueFunc2:write_task}
         g_sim.triggers = {}

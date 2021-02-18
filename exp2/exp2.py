@@ -14,7 +14,7 @@ import road_classes
 
 DATA_ADDRESS = "../results/exp2"
 
-def initialiseSimulator(cars,speed_limit,init_speeds=None,vehicle_spacing=3,lane_width=None,dt=.1,debug=False):
+def initialiseSimulator(cars,speed_limit,init_speeds=None,vehicle_spacing=3,lane_width=None,dt=.1,sim_position=None,sim_dimensions=None,debug=False):
     """Takes in a list of cars and a boolean indicating whether to produce graphics.
        Outputs the standard straight road simulator environment with the input cars initialised
        on the map with the first car (presumed ego) ahead of the second"""
@@ -39,7 +39,7 @@ def initialiseSimulator(cars,speed_limit,init_speeds=None,vehicle_spacing=3,lane
     runtime = 120.0 #max runtime; simulation will terminate if run exceeds this length of time
 
     #Initialise the simulator object, load vehicles into the simulation, then initialise the action simulation
-    sim = simulator.Simulator(run_graphics,draw_traj,runtime,debug,dt=dt)
+    sim = simulator.Simulator(run_graphics,draw_traj,runtime,debug,dt=dt,graphic_position=sim_position,graphic_dimensions=sim_dimensions)
     sim.loadCars(cars)
 
     sim.initialiseSimulator(num_junctions,num_roads,road_angles,road_lengths,junc_pairs,\
@@ -165,7 +165,12 @@ def runExperiment(experiment_order):
     
     #################################################################################
     #Initialise Simulator here becayse need state definition
-    sim = initialiseSimulator([lane_changer,lane_keeper],speed_limit,init_speeds=[5,5],lane_width=lane_width,dt=dt,debug=debug)
+    #w,h = pyautogui.size() #height and width of screen
+    w,h = 1024,768
+    graphic_position = (0,0)
+    graphic_dimensions = (w,h)
+    
+    sim = initialiseSimulator([lane_changer,lane_keeper],speed_limit,init_speeds=[5,5],lane_width=lane_width,dt=dt,sim_position=graphic_position,sim_dimensions=graphic_dimensions,debug=debug)
 
     lane_keeper.heading = (lane_keeper.heading+180)%360
     lane_keeper.initialisation_params["heading"] = lane_keeper.heading
@@ -173,13 +178,12 @@ def runExperiment(experiment_order):
     ##################################################################################
     #Write Instructions
 
-    w,h = pyautogui.size() #height and width of screen
 
     pygame.init()
     g_sim = sim.g_sim
 
     screen = sim.g_sim.screen #This is messy, but the best way to get this I think
-    font_size = 40
+    font_size = 25
     space_size = 10
 
     instructions = ["-Press and hold UP arrow to accelerate","-Press and hold DOWN arrow to decelerate","-Press and hold the LEFT arrow to turn anti-clockwise","-Press and hold RIGHT arrow to turn clockwise","-Press SPACE to pause simulation"]
@@ -292,7 +296,7 @@ def runExperiment(experiment_order):
 
 if __name__ == "__main__":
     lane_changer_type = ["passive","aggressive","passive","aggressive"]
-    lane_changer_type = ["passive","passive","aggressive","aggressive"]
+    lane_keeper_type = ["passive","passive","aggressive","aggressive"]
 
     experiment_types = list(zip(lane_keeper_type,lane_changer_type))
     experiment_order = random.sample(experiment_types,len(experiment_types))
