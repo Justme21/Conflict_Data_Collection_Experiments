@@ -8,11 +8,10 @@ In this experiment you start in the top lane, driving the pink car. The car in t
 In each round of the experiment a sub-objective will appear at the bottom of the screen. This can be:
 
 * "Drive as if in a rush" or
-* "Drive as if on a leisurely drive"
+* "Drive considerately"
 
 You should keep this sub-objective in mind during the round. 
-A score will appear above the sub-objective. This score is related to your sub-objective, it will start at 200 and decrease
-if your behaviour does not match the sub-objective. This score is not recorded and is purely to help clarify the sub-objective.
+Also keep in mind that neither car has indicators in this experiment, so use the orange car's motion to infer their intent.
 
 Your goal in each round is to change lanes as early as you deem feasible.
 The other car on the road has their own sub-objective, which will affect how they respond to your car. 
