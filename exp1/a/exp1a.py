@@ -71,6 +71,14 @@ def radiusTrigger(ego_car,trigger_car,radius):
 
     return f
 
+
+def distanceTravelledTrigger(ego_car,threshold):
+    def f():
+        return ego_car.state["position"][0]>threshold
+
+    return f
+
+
 def headingTrigger(ego_car,radius):
     def f():
         return abs(ego_car.state["heading"])<radius or abs(ego_car.state["heading"])>360-radius
@@ -250,7 +258,8 @@ def runExperiment(experiment_order):
     heading_radius = 2
     lane_changer_heading_trigger = headingTrigger(lane_changer,heading_radius)
     y_dist_trigger = relativeYRadiusTrigger(lane_changer,lane_keeper,lane_width/4,'<')
-    sim_triggers = {andTrigger([lane_trigger,lane_changer_heading_trigger,y_dist_trigger]):sim.endSimulation}
+    sim_triggers = {andTrigger([lane_trigger,lane_changer_heading_trigger,y_dist_trigger]):sim.endSimulation,\
+                    distanceTravelledTrigger(lane_keeper,105):sim.endSimulation}
     sim.addTriggers(sim_triggers)
 
     #########################################################################################
@@ -331,7 +340,7 @@ def runExperiment(experiment_order):
 
 
 if __name__ == "__main__":
-    num_observations = 1
+    num_observations = 15
     lane_keeper_type,lane_changer_type = [],[]
     for _ in range(num_observations):
         lane_keeper_type += ["aggressive","passive","aggressive","passive"] #(aggressive/passive) This dictates the instruction to be provided
