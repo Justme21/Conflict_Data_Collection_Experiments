@@ -221,7 +221,7 @@ def runExperiment(experiment_order):
     ##################################################################################
     #Write Instructions
 
-    w,h = pyautogui.size() #height and width of screen
+    #w,h = pyautogui.size() #height and width of screen
     init_score = 200
     global cur_score
     cur_score  = init_score
@@ -289,8 +289,8 @@ def runExperiment(experiment_order):
             directive = "Drive as if on a leisurely drive and change lanes"
             score_function = distanceCost(lane_keeper,lane_changer,init_score,veh_length)
 
-        write_task  = writeText(screen,[iteration_count,directive],(int(w/3),int(h/5)),font_size,space_size)
-        write_score = writeScore(screen,score_function,(int(w/3),int(h/5)+2*(font_size+space_size)),font_size,space_size)
+        write_task  = writeText(screen,[iteration_count,directive],(int(w/2),int(h/5)),font_size,space_size)
+        write_score = writeScore(screen,score_function,(int(w/2),int(h/5)+2*(font_size+space_size)),font_size,space_size)
 
         triggers = {trueFunc:write_instructions,trueFunc1:write_score,trueFunc2:write_task}
         g_sim.triggers = {}
