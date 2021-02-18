@@ -191,14 +191,7 @@ def runExperiment(experiment_order):
    
     ###########################################################################################
     #Setting up Controllers for Lane Keeping Vehicle
-    #Needs constant velocity controller AND IDM controller
-    #IDM controller
-    aggressive_idm_params = {"headway":0.0,"s0":0,"b":50} #aggressive
-    aggressive_idm_controller = lcc.DrivingController(controller="idm",ego=lane_keeper,other=lane_changer,timestep=dt,speed_limit=speed_limit,accel_range=accel_range,accel_jerk=accel_jerk,yaw_rate_range=yaw_rate_range,yaw_rate_jerk=yaw_rate_jerk,**aggressive_idm_params)
-        
-    passive_idm_params = {"headway":1.6,"s0":2,"b":3} #passive
-    passive_idm_controller = lcc.DrivingController(controller="idm",ego=lane_keeper,other=lane_changer,timestep=dt,speed_limit=speed_limit,accel_range=accel_range,accel_jerk=accel_jerk,yaw_rate_range=yaw_rate_range,yaw_rate_jerk=yaw_rate_jerk,**passive_idm_params)
-    
+    #Needs constant velocity controller
     #Constant velocity controller
     constant_controller = lcc.DrivingController(controller="constant",ego=lane_keeper,other=lane_changer,timestep=dt,speed_limit=speed_limit,accel_range=accel_range,accel_jerk=accel_jerk,yaw_rate_range=yaw_rate_range,yaw_rate_jerk=yaw_rate_jerk)
 
@@ -221,8 +214,6 @@ def runExperiment(experiment_order):
     #########################################################################################
     #Run Experiments
     for i,(lane_keeper_type,lane_changer_type) in enumerate(experiment_order):
-        lane_keeper.addControllers({"idm":passive_idm_controller})
-
         ######################################################################
         #Set Graphic Simulator triggers
         iteration_count = "Round : {}/{}".format(i+1,len(experiment_order))

@@ -354,6 +354,13 @@ def runExperiment(experiment_order):
         ######################################################################
         #Run simulation
         sim.reinitialise()
+        
+        #Controllers have to be individually reinitialised because they are bespoke
+        lc_controller.controller = LaneChangeController(ego=lane_changer,other=None,timestep=dt,speed_limit=speed_limit,accel_range=accel_range,dest_state=right_lane_state,axle_length=axle_length,T=lcT)
+        slc_controller.controller = LaneChangeController(ego=lane_changer,other=None,timestep=dt,speed_limit=speed_limit,accel_range=accel_range,dest_state=right_lane_state,axle_length=axle_length,T=slcT)
+        rlc_controller.controller = LaneChangeController(ego=lane_changer,other=None,timestep=dt,speed_limit=speed_limit,accel_range=accel_range,dest_state=left_lane_state,axle_length=axle_length,T=rlcT)
+        behind_controller.controller = LaneChangeController(ego=lane_changer,other=None,timestep=dt,speed_limit=speed_limit,accel_range=accel_range,dest_state=slow_right_lane_state,axle_length=axle_length,T=lcbT)
+        
         sim.runComplete() #will start from paused
 
         ######################################################################
