@@ -219,10 +219,10 @@ def runExperiment(experiment_order):
 
     screen = sim.g_sim.screen #This is messy, but the best way to get this I think
     font_size = 40
-    space_size = 15
+    space_size = 10
 
     instructions = ["-Press and hold UP arrow to accelerate","-Press and hold DOWN arrow to decelerate","-Press and hold the LEFT arrow to turn anti-clockwise","-Press and hold RIGHT arrow to turn clockwise","-Press SPACE to pause simulation"]
-    write_instructions = writeText(screen,instructions,(0,int(h/3)),font_size,space_size)
+    write_instructions = writeText(screen,instructions,(0,int(h/5)),font_size,space_size)
    
     ###########################################################################################
     #Setting up Controllers for Lane Keeping Vehicle
@@ -274,8 +274,8 @@ def runExperiment(experiment_order):
             directive = "Drive as if you were on a leisurely drive and change lanes"
             score_function = distanceCost(lane_keeper,lane_changer,init_score,veh_length)
 
-        write_score = writeScore(screen,score_function,(int(w/2),int(h/3)),font_size,space_size)
-        write_task  = writeText(screen,[directive],(int(w/2),int(h/3)+2*(font_size+space_size)),font_size,space_size)
+        write_task  = writeText(screen,[directive],(int(w/2),int(h/5)),font_size,space_size)
+        write_score = writeScore(screen,score_function,(int(w/2),int(h/5)+(font_size+space_size)),font_size,space_size)
 
         triggers = {trueFunc:write_instructions,trueFunc1:write_score,trueFunc2:write_task}
         g_sim.triggers = {}
