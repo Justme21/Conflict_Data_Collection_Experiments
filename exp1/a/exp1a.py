@@ -54,7 +54,7 @@ def onLaneTrigger(ego_car, trigger_car):
     #Triggered if trigger car is on the same lane as ego car
     def f():
         lanes = [x for x in ego_car.on if isinstance(x,road_classes.Lane)]
-        return (True in [trigger_car in x.on for x in lanes]) and trigger_car.state["position"][0]>ego_car.state["position"][0]-ego_car.length/2
+        return (True in [trigger_car in x.on for x in lanes])
 
     return f
 
