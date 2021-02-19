@@ -4,7 +4,6 @@ sys.path.insert(0,'../libraries/driving_simulator')
 import datetime
 import linear_controller_classes as lcc
 import math
-import pdb
 import pyautogui
 import pygame
 import simulator
@@ -51,11 +50,18 @@ def initialiseSimulator(cars,speed_limit,init_speeds=None,vehicle_spacing=3,lane
 def onLaneTrigger(ego_car, trigger_car):
     #Triggered if trigger car is on the same lane as ego car
     def f():
-        lanes = [x for x in ego_car.on if isinstance(x,road_classes.Lane)]
-        return (True in [trigger_car in x.on for x in lanes]) #and trigger_car.state["position"][0]>ego_car.state["position"][0]-ego_car.length/2
+        ego_lanes = [x for x in ego_car.on if isinstance(x,road_classes.Lane)]
+        trigger_lanes = [x for x in trigger_car.on if isinstance(x,road_classes.Lane)]
+        return True in [ x in ego_lanes for x in trigger_lanes]
 
     return f
 
+
+def aheadTrigger(ego_car,trigger_car):
+    def f():
+        return trigger_car.state["position"][0]>ego_car.state["position"][0]
+
+    return f
 
 def computeDistance(pt1,pt2):
     """Compute the L2 distance between two points"""
@@ -68,6 +74,14 @@ def radiusTrigger(ego_car,trigger_car,radius):
         return computeDistance(ego_car.state["position"],trigger_car.state["position"])<radius
 
     return f
+
+
+def distanceTravelledTrigger(ego_car,threshold):
+    def f():
+        return ego_car.state["position"][0]>threshold
+
+    return f
+
 
 def headingTrigger(ego_car,radius):
     def f():
@@ -177,8 +191,6 @@ def runExperiment(experiment_order):
     lane_keeper.sense()
     ##################################################################################
     #Write Instructions
-
-
     pygame.init()
     g_sim = sim.g_sim
 
@@ -203,8 +215,9 @@ def runExperiment(experiment_order):
     lane_keeper.setController(tag="default",controller=None)
     
     lane_trigger = onLaneTrigger(lane_keeper,lane_changer)
+    ahead_trigger = aheadTrigger(lane_keeper,lane_changer)
     consequent = changeController(lane_keeper,"idm")
-    triggers = {lane_trigger:consequent}
+    triggers = {andTrigger([lane_trigger,ahead_trigger]):consequent}
 
     lane_keeper.addTriggers(triggers)
 
@@ -212,7 +225,9 @@ def runExperiment(experiment_order):
     heading_radius = 2
     lane_changer_heading_trigger = headingTrigger(lane_changer,heading_radius)
     y_dist_trigger = relativeYRadiusTrigger(lane_changer,lane_keeper,lane_width/4,'<')
-    sim_triggers = {andTrigger([lane_trigger,lane_changer_heading_trigger,y_dist_trigger]):sim.endSimulation}
+    sim_triggers = {andTrigger([lane_trigger,lane_changer_heading_trigger,y_dist_trigger]):sim.endSimulation,
+                    distanceTravelledTrigger(lane_changer,105):sim.endSimulation,\
+                    distanceTravelledTrigger(lane_keeper,105):sim.endSimulation}
     sim.addTriggers(sim_triggers)
 
     #########################################################################################

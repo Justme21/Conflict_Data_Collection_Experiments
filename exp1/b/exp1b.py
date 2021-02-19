@@ -59,8 +59,9 @@ def initialiseSimulator(cars,speed_limit,init_speeds=None,vehicle_spacing=3,lane
 def onLaneTrigger(ego_car, trigger_car):
     #Triggered if trigger car is on the same lane as ego car
     def f():
-        lanes = [x for x in ego_car.on if isinstance(x,road_classes.Lane)]
-        return (True in [trigger_car in x.on for x in lanes])
+        ego_lanes = [x for x in ego_car.on if isinstance(x,road_classes.Lane)]
+        trigger_lanes = [x for x in trigger_car.on if isinstance(x,road_classes.Lane)]
+        return True in [x in ego_lanes for x in trigger_lanes]
 
     return f
 
@@ -310,7 +311,8 @@ def runExperiment(experiment_order):
     lane_changer_heading_trigger = headingTrigger(lane_changer,heading_radius)
     y_dist_trigger = relativeYRadiusTrigger(lane_changer,lane_keeper,lane_width/4,'<')
     sim_triggers = {andTrigger([distanceTravelledTrigger(lane_keeper,60),onLaneTrigger(lane_changer,lane_keeper),lane_changer_heading_trigger,y_dist_trigger]):sim.endSimulation,\
-                    distanceTravelledTrigger(lane_keeper,105):sim.endSimulation}
+                    distanceTravelledTrigger(lane_keeper,105):sim.endSimulation,\
+                    distanceTravelledTrigger(lane_changer,105):sim.endSimulation}
     sim.addTriggers(sim_triggers)
  
     ##################################################################################################################
@@ -341,7 +343,7 @@ def runExperiment(experiment_order):
             directive = "Drive as if in a rush and stay in your lane"
             score_function = timeCost(lane_keeper,dt,init_score)
         else:
-            directive = "Drive considerately and stay in your lane"
+            directive = "Drive cautiously and stay in your lane"
             score_function = distanceCost(lane_keeper,lane_changer,init_score,veh_length)
         
         write_task  = writeText(screen,[iteration_count,directive],(int(w/2),int(h/5)),font_size,space_size)

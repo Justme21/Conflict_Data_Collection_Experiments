@@ -8,7 +8,7 @@ In this experiment you start in the bottom lane, driving the pink car. The car i
 In each round of the experiment a sub-objective will appear at the bottom of the screen. This can be:
 
 * "Drive as if in a rush" or 
-* "Drive considerately"
+* "Drive cautiously"
 
 You should keep this sub-objective in mind during the round.
 Also keep in mind that neither car has indicators in this experiment, so use the orange car's motion to infer their intent.
