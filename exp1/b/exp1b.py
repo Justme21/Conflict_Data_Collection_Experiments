@@ -218,7 +218,7 @@ def runExperiment(experiment_order):
     dt = .1
     init_speed = 5
     speed_limit = 5.5
-    participant_accel_range = [-6,3]
+    participant_accel_range = [-3,3]
     accel_range = [-3,3]
     yaw_rate_range = [-10,10] # degree per second^2
     

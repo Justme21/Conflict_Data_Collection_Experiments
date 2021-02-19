@@ -24,7 +24,7 @@ python3 exp1a.py
 ```
 
 Each round is expected to last about 20 seconds.
-The experiment will run for 60 rounds and is expeced to take around 20 minutes in total.
+The experiment will run for 60 rounds and is expected to take around 20 minutes in total.
 At the start of each round the simulation is paused and, when you are ready to proceed, you will press the SPACE button to begin
 the round (this is a bit finicky, sorry).
 

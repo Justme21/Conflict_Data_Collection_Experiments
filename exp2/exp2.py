@@ -52,7 +52,7 @@ def onLaneTrigger(ego_car, trigger_car):
     #Triggered if trigger car is on the same lane as ego car
     def f():
         lanes = [x for x in ego_car.on if isinstance(x,road_classes.Lane)]
-        return (True in [trigger_car in x.on for x in lanes]) and trigger_car.state["position"][0]>ego_car.state["position"][0]-ego_car.length/2
+        return (True in [trigger_car in x.on for x in lanes]) #and trigger_car.state["position"][0]>ego_car.state["position"][0]-ego_car.length/2
 
     return f
 
@@ -149,7 +149,7 @@ def runExperiment(experiment_order):
     yaw_rate_jerk = 10
     dt = .1
     speed_limit = 5.5
-    participant_accel_range = [-6,3]
+    participant_accel_range = [-3,3]
     accel_range = [-3,3]
     yaw_rate_range = [-10,10] # degree per second^2
     
@@ -191,7 +191,11 @@ def runExperiment(experiment_order):
    
     ###########################################################################################
     #Setting up Controllers for Lane Keeping Vehicle
-    #Needs constant velocity controller
+    #Needs constant velocity controller and IDM
+    passive_idm_params = {"headway":1.6,"s0":2,"b":3} #passive
+    passive_idm_controller = lcc.DrivingController(controller="idm",ego=lane_keeper,other=lane_changer,timestep=dt,speed_limit=speed_limit,accel_range=accel_range,accel_jerk=accel_jerk,yaw_rate_range=yaw_rate_range,yaw_rate_jerk=yaw_rate_jerk,**passive_idm_params)
+    lane_keeper.addControllers({"idm":passive_idm_controller})
+
     #Constant velocity controller
     constant_controller = lcc.DrivingController(controller="constant",ego=lane_keeper,other=lane_changer,timestep=dt,speed_limit=speed_limit,accel_range=accel_range,accel_jerk=accel_jerk,yaw_rate_range=yaw_rate_range,yaw_rate_jerk=yaw_rate_jerk)
 
@@ -256,7 +260,7 @@ def runExperiment(experiment_order):
         lane_changer_state_list = [(x[0]["position"][0],x[0]["position"][1],x[0]["velocity"],math.radians(x[0]["heading"])) for x in lane_changer_log_list]
         lane_changer_act_list = [(x[1][0],math.radians(x[1][1])) for x in lane_changer_log_list]
 
-        results = open("{}/exp2_results-{}.txt".format(DATA_ADDRESS,exp_start_time,i),"w")
+        results = open("{}/exp2_results-{}-{}.txt".format(DATA_ADDRESS,exp_start_time,i),"w")
         results.write("num_cars: {}\n".format(num_cars))
         results.write("lane_width: {}\n".format(lane_width))
         results.write("veh_length: {}\n".format(veh_length))
