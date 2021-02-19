@@ -13,7 +13,7 @@ import random
 import road_classes
 
 
-def initialiseSimulator(cars,speed_limit,init_speeds=None,vehicle_spacing=3,lane_width=None,dt=.1,debug=False):
+def initialiseSimulator(cars,speed_limit,init_speeds=None,vehicle_spacing=3,lane_width=None,dt=.1,graphic_position=None,graphic_dimensions=None,debug=False):
     """Takes in a list of cars and a boolean indicating whether to produce graphics.
        Outputs the standard straight road simulator environment with the input cars initialised
        on the map with the first car (presumed ego) ahead of the second"""
@@ -38,7 +38,7 @@ def initialiseSimulator(cars,speed_limit,init_speeds=None,vehicle_spacing=3,lane
     runtime = 120.0 #max runtime; simulation will terminate if run exceeds this length of time
 
     #Initialise the simulator object, load vehicles into the simulation, then initialise the action simulation
-    sim = simulator.Simulator(run_graphics,draw_traj,runtime,debug,dt=dt)
+    sim = simulator.Simulator(run_graphics,draw_traj,runtime,debug,graphic_position=graphic_position,graphic_dimensions=graphic_dimensions,dt=dt)
     sim.loadCars(cars)
 
     sim.initialiseSimulator(num_junctions,num_roads,road_angles,road_lengths,junc_pairs,\
@@ -159,7 +159,10 @@ def runExperiment():
     
     #################################################################################
     #Initialise Simulator here becayse need state definition
-    sim = initialiseSimulator([lane_changer,lane_keeper],speed_limit,init_speeds=[5,0],lane_width=lane_width,dt=dt,debug=debug)
+    w,h = 1280, 800
+    graphic_position = (0,0)
+    graphic_dimensions = (w,h)
+    sim = initialiseSimulator([lane_changer,lane_keeper],speed_limit,init_speeds=[5,0],lane_width=lane_width,dt=dt,graphic_position=graphic_position,graphic_dimensions=graphic_dimensions,debug=debug)
 
     lane_keeper.heading = (lane_keeper.heading+180)%360
     lane_keeper.initialisation_params["heading"] = lane_keeper.heading
@@ -167,7 +170,7 @@ def runExperiment():
     ##################################################################################
     #Write Instructions
 
-    w,h = pyautogui.size() #height and width of screen
+    #w,h = pyautogui.size() #height and width of screen
 
     pygame.init()
     g_sim = sim.g_sim
@@ -176,7 +179,7 @@ def runExperiment():
     font_size = 40
     space_size = 15
 
-    instructions = ["-Press and hold UP arrow to accelerate","-Press and hold DOWN arrow to decelerate","-Press and hold the LEFT arrow to turn anti-clockwise","-Press and hold RIGHT arrow to turn clockwise","-Press SPACE to pause simulation"]
+    instructions = ["-Press and hold UP arrow to accelerate","-Press and hold DOWN arrow to decelerate","-Press and hold the LEFT arrow to turn anti-clockwise","-Press and hold RIGHT arrow to turn clockwise","-Press SPACE to pause/unpause simulation"]
     write_instructions = writeText(screen,instructions,(0,int(h/5)),font_size,space_size)
    
     ###########################################################################################

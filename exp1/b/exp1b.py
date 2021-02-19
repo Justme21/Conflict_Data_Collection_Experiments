@@ -237,7 +237,8 @@ def runExperiment(experiment_order):
     #Initialise Simulator here because need state definition
 
     sim_position = (0,0)
-    w,h = 1024,768
+    #w,h = 1024,768
+    w,h = 1200,800
     #w,h = pyautogui.size()
     sim_dimensions = (w,h)
     sim = initialiseSimulator([lane_changer,lane_keeper],speed_limit,init_speeds=[init_speed,init_speed],lane_width=lane_width,dt=dt,debug=debug,sim_position=sim_position,sim_dimensions=sim_dimensions)
@@ -259,7 +260,7 @@ def runExperiment(experiment_order):
     font_size = 25
     space_size = 10
 
-    instructions = ["-Press and hold UP arrow to accelerate","-Press and hold DOWN arrow to decelerate","-Press and hold the LEFT arrow to turn anti-clockwise","-Press and hold RIGHT arrow to turn clockwise","-Press SPACE to pause simulation"]
+    instructions = ["-Press and hold UP arrow to accelerate","-Press and hold DOWN arrow to decelerate","-Press and hold the LEFT arrow to turn anti-clockwise","-Press and hold RIGHT arrow to turn clockwise","-Press SPACE to pause/unpause simulation"]
     write_instructions = writeText(screen,instructions,(0,int(h/5)),font_size,space_size)
     
     ###########################################################################################
