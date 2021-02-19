@@ -51,7 +51,7 @@ and a `.py` file that contains the experiment code. After reading the `.txt` fil
 Experiment 2 (exp2) examines how sub-objectives affect manoeuvre execution, and details regarding this experiment can be found in a `.txt` file in the exp2 directory.
 This experiment will involve a single execution of each scenario, subject to changing sub-objecives (see the relevant `.txt` file for more information).
 
-To access this experiments move to the `exp2` directory. In this directory there is a `.txt` file providing instructions on what the experiment entails,
+To access this experiment move to the `exp2` directory. In this directory there is a `.txt` file providing instructions on what the experiment entails,
 and a `.py` file that contains the experiment code. After reading the `.txt` file, run the `.py` file using the command `python3 <filename>.py`
 
 You MUST complete Experiment 1 BEFORE doing Experiment 2.
