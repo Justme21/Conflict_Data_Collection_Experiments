@@ -40,7 +40,9 @@ In total you are participating in 2 experiments, labelled "exp1" and "exp2".
 Experiment 1 (exp1) examines different ways a lane change can be executed. This experiment has two parts:
 
 * exp1a: where you are performing a lane change, while the other car stays in their lane.
-* exp2a: where you are keeping your lane, while the other car performs a lane change.
+* exp1b: where you are keeping your lane, while the other car performs a lane change.
+
+(I encourage doing exp1b FIRST to get demonstrations of successful lane changes).
 
 Each sub-experiment is in a different directory, and details regarding each sub-experiment can be found in `.txt` files found in the relevant directories.
 This experiment will involve repeated executions of each scenario, subject to changing sub-objectives (see the relevant `.txt` files for more information).
