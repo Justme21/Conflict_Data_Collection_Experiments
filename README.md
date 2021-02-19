@@ -3,7 +3,7 @@ Overview
 
 Thank you for agreeing to help me generate data for my work. Your cooperation is greatly appreciated.
   
-In these experiments I am gathering data about driving behaviours iin hgihway environments. My experiments are focused on the execution of lane change manoeuvres
+In these experiments I am gathering data about driving behaviours in highway environments. My experiments are focused on the execution of lane change manoeuvres
 in a scenario with one other car on the road. 
 All the experiments will take place on a straight road 2-lane highway environment (both lanes going the same direction).
 At different points in the experiments you will be required to assume different roles in the lane change; either performing the lane change, or keeping your lane while the other car changes lanes.
@@ -30,7 +30,7 @@ Getting Started with the Sandbox
 ================================
 In order to familiarise yourself with the simulator controls, feel free to use the sandbox environment provided in sandbox.py (run using the terminal command `python3 sandbox.py`)
 This is a 2-lane highway environment with a stationary car to navigate around.
-No data is stored from executions on the sandbox. The scenario will restart until you are close the window, so take as long as you need to get comfortable with the controls.
+No data is stored from executions on the sandbox. The scenario will restart until you close the window, so take as long as you need to get comfortable with the controls.
 Once you are ready to continue, close the sandbox window. 
 
 
