@@ -36,7 +36,7 @@ Once you are ready to continue, close the sandbox window.
 
 The Experiments
 ===============
-In total you are participating in 2 experiments, labelled "exp1" and "exp2"
+In total you are participating in 2 experiments, labelled "exp1" and "exp2".
 Experiment 1 (exp1) examines different ways a lane change can be executed. This experiment has two parts:
 
 * exp1a: where you are performing a lane change, while the other car stays in their lane.
@@ -46,20 +46,20 @@ Each sub-experiment is in a different directory, and details regarding each sub-
 This experiment will involve repeated executions of each scenario, subject to changing sub-objectives (see the relevant `.txt` files for more information).
 
 To access these experiments move to the `exp1` directory, and then into the `a` and `b` sub-directories. In each sub-directory there is a `.txt` file providing instructions on what the experiment entails,
-and a `.py` file that contains the experiment code. After reading the `.txt` file, run the `.py` file using the command `python3 <filename>.py`
+and a `.py` file that contains the experiment code. After reading the `.txt` file, run the `.py` file using the command `python3 <filename>.py`.
 
 Experiment 2 (exp2) examines how sub-objectives affect manoeuvre execution, and details regarding this experiment can be found in a `.txt` file in the exp2 directory.
 This experiment will involve a single execution of each scenario, subject to changing sub-objecives (see the relevant `.txt` file for more information).
 
 To access this experiment move to the `exp2` directory. In this directory there is a `.txt` file providing instructions on what the experiment entails,
-and a `.py` file that contains the experiment code. After reading the `.txt` file, run the `.py` file using the command `python3 <filename>.py`
+and a `.py` file that contains the experiment code. After reading the `.txt` file, run the `.py` file using the command `python3 <filename>.py`.
 
 You MUST complete Experiment 1 BEFORE doing Experiment 2.
 You do not need to do exp1a,exp1b and exp2 in the same sitting, and a break to recharge between experiment sections is permitted.
 It is also possible to pause experiments during their execution, if a break is required.
 
-Each experiment in Experiment 1 is expected to take about 20 minutes
-Experiment 2 is expected to take only a few minutes 
+Each experiment in Experiment 1 is expected to take about 20 minutes.
+Experiment 2 is expected to take only a few minutes.
 
 Submitting the Results
 ======================
