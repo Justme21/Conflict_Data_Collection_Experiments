@@ -63,7 +63,7 @@ Experiment 2 is expected to take only a few minutes.
 
 Submitting the Results
 ======================
-Once you have completed both Experiment 1 and Experiment 2 completely, please rename the folder "results" (folder can be renamed however you like) and upload the file to:
+Once you have completed both Experiment 1 and Experiment 2, please rename the folder from "results" to a different title (which can be whatever you like) and upload the file to:
 https://drive.google.com/drive/folders/1x87aWfRLnZFmCvl4Cbs0-3fyky3nCKQ2?usp=sharing
 
 Thank you again for your participation.
