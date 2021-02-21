@@ -279,14 +279,12 @@ def runExperiment(experiment_order):
 
         iteration_count = "Round: {}/{}".format(i+1,len(experiment_order))
 
-        if lane_keeper_type == "aggressive":
+        if lane_changer_type == "aggressive":
             #directive = "Get to the end of the lane as quickly as possible"
             directive = "Drive as if in a rush and change lanes"
-            score_function = timeCost(lane_keeper,dt,init_score)
         else:
             #directive = "Stay in lane as safely as possible"
             directive = "Drive cautiously and change lanes"
-            score_function = distanceCost(lane_keeper,lane_changer,init_score,veh_length)
 
         write_task  = writeText(screen,[iteration_count,directive],(int(w/2),int(h/5)),font_size,space_size)
 
