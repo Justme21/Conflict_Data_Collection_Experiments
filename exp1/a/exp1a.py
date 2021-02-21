@@ -97,6 +97,15 @@ def andTrigger(triggers):
     return f
 
 
+def relativeXRadiusTrigger(ego_car,trigger_car,radius,rel='>'):
+    def f():
+        if rel == '=': return ego_car.state["position"][0] - trigger_car.state["position"][0] == radius
+        elif rel == '<': return ego_car.state["position"][0] - trigger_car.state["position"][0] < radius
+        else: return ego_car.state["position"][0] - trigger_car.state["position"][0] > radius
+
+    return f
+
+
 def relativeYRadiusTrigger(ego_car,trigger_car,radius,rel='>'):
     def f():
         if rel == '=': return abs(ego_car.state["position"][1] - trigger_car.state["position"][1]) == radius
@@ -252,7 +261,7 @@ def runExperiment(experiment_order):
     
     lane_trigger = onLaneTrigger(lane_keeper,lane_changer)
     consequent = changeController(lane_keeper,"idm")
-    triggers = {lane_trigger:consequent}
+    triggers = {andTrigger([lane_trigger,relativeXRadiusTrigger(lane_keeper,lane_changer,0,'<')]):consequent}
 
     lane_keeper.addTriggers(triggers)
 
