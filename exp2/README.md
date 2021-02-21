@@ -9,10 +9,11 @@ The other car also behaved according to either an "aggressive" model or a "passi
 
 In this experiment you start in the top lane, driving the pink car. The car in the bottom lane will stay in it's lane.
 
-In this experiment you will be told in advance how the other car has been programmed to behave. It will either:
-* follow a model that is more aggressive than the behaviour you have previously demonstrated, or
-* follow a model that is less aggressive than the behaviour you have previously demonstrated.
-* follow a model that is more passive than the behaviour you have previously demonstrated.
+The primary objective in this experiment is to successfully complete a lane change as quickly/early as possible.
+You will be told in advance how the other car has been programmed to behave. It will either:
+* follow a model that is more aggressive than the behaviour you have previously demonstrated,
+* follow a model that is less aggressive than the behaviour you have previously demonstrated,
+* follow a model that is more passive than the behaviour you have previously demonstrated,
 * follow a model that is less passive than the behaviour you have previously demonstrated.
 
 In each round of the experiment a message will appear at the bottom of the screen telling you which is the case.

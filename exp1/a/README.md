@@ -5,6 +5,7 @@ Thank you for agreeing to help me generate data for my work. Your cooperation is
 
 In this experiment you start in the top lane, driving the pink car. The car in the bottom lane will stay in its lane.
 
+The primary objective in this experiment is to successfully complete a lane change as quickly/early as possible.
 In each round of the experiment a sub-objective will appear at the bottom of the screen. This can be:
 
 * "Drive as if in a rush" or
