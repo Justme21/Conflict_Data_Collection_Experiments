@@ -5,7 +5,6 @@ import datetime
 import linear_controller_classes as lcc
 import math
 import pdb
-import pyautogui
 import pygame
 import simulator
 import vehicle_classes
@@ -13,8 +12,6 @@ import random
 import road_classes
 
 DATA_ADDRESS = "../../results/exp1/a"
-
-cur_score = None
 
 def initialiseSimulator(cars,speed_limit,init_speeds=None,vehicle_spacing=3,lane_width=None,dt=.1,graphic_position=None,graphic_dimensions=None,debug=False):
     """Takes in a list of cars and a boolean indicating whether to produce graphics.
@@ -125,29 +122,6 @@ def changeController(car,tag):
 
     return f
 
-#####################################################################################################################
-#Score functions
-
-def computeDistance(pt1,pt2):
-    """Compute the L2 distance between two points"""
-    return math.sqrt((pt2[1]-pt1[1])**2 + (pt2[0]-pt1[0])**2)
-
-
-def timeCost(car,dt,max_score):
-    def f():
-        return max_score - car.time/dt
-
-    return f
-
-
-def distanceCost(car1,car2,max_score,min_distance):
-    def f():
-        global cur_score
-        cur_score =  min(cur_score,max_score*(computeDistance(car1.state["position"],car2.state["position"])/min_distance))
-        return cur_score
-
-    return f
-
 ###################################################################################################################
 #Direction Writing Stuff
 def writeTextToScreen(screen,text_lines,start_position,font_size,space_size):
@@ -156,14 +130,6 @@ def writeTextToScreen(screen,text_lines,start_position,font_size,space_size):
     text = [font.render(l,1,white) for l in text_lines]
     for i,line in enumerate(text):
         screen.blit(line,(start_position[0],start_position[1]+font_size*i+space_size*i))
-
-
-def writeScore(screen,scoreFunction,start_position,font_size,space_size):
-    def f():
-        line = ["Maximise your Score","Score: {}".format(round(scoreFunction(),1))]
-        writeTextToScreen(screen,line,start_position,font_size,space_size)
-
-    return f
 
 
 def writeText(screen,text_list,start_position,font_size,space_size):
@@ -215,8 +181,6 @@ def runExperiment(experiment_order):
     
     #################################################################################
     #Initialise Simulator here becayse need state definition
-    #w,h = pyautogui.size()
-    #w,h = 1024,768
     w,h = 1200,800
     graphic_position = (0,0)
     graphic_dimensions = (w,h)
@@ -227,11 +191,6 @@ def runExperiment(experiment_order):
     lane_keeper.sense()
     ##################################################################################
     #Write Instructions
-
-    #w,h = pyautogui.size() #height and width of screen
-    init_score = 200
-    global cur_score
-    cur_score  = init_score
 
     pygame.init()
     g_sim = sim.g_sim
@@ -284,8 +243,6 @@ def runExperiment(experiment_order):
 
          ######################################################################
         #Set Graphic Simulator triggers
-        cur_score = init_score
-
         iteration_count = "Round: {}/{}".format(i+1,len(experiment_order))
 
         if lane_changer_type == "aggressive":

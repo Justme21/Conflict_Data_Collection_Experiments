@@ -5,7 +5,6 @@ import datetime
 import linear_controller_classes as lcc
 import math
 import pdb
-import pyautogui
 import pygame
 import simulator
 import vehicle_classes
@@ -169,14 +168,11 @@ def runExperiment():
     lane_keeper.sense()
     ##################################################################################
     #Write Instructions
-
-    #w,h = pyautogui.size() #height and width of screen
-
     pygame.init()
     g_sim = sim.g_sim
 
     screen = sim.g_sim.screen #This is messy, but the best way to get this I think
-    font_size = 40
+    font_size = 25
     space_size = 15
 
     instructions = ["-Press and hold UP arrow to accelerate","-Press and hold DOWN arrow to decelerate","-Press and hold the LEFT arrow to turn anti-clockwise","-Press and hold RIGHT arrow to turn clockwise","-Press SPACE to pause/unpause simulation"]

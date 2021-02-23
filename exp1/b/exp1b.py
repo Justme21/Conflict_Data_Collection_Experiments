@@ -5,7 +5,6 @@ import datetime
 import linear_controller_classes as lcc
 import math
 import pdb
-import pyautogui
 import pygame
 import random
 import simulator
@@ -17,8 +16,6 @@ sys.path.insert(0,'../../libraries')
 from trajectory_type_definitions import LaneChangeController
 
 DATA_ADDRESS = "../../results/exp1/b"
-
-cur_score = None
 
 
 def initialiseSimulator(cars,speed_limit,init_speeds=None,vehicle_spacing=3,lane_width=None,dt=.1,sim_position=None,sim_dimensions=None,debug=False):
@@ -140,28 +137,6 @@ def fixHeading(car):
 
     return f
 
-#####################################################################################################################
-#Score functions
-
-def computeDistance(pt1,pt2):
-    """Compute the L2 distance between two points"""
-    return math.sqrt((pt2[1]-pt1[1])**2 + (pt2[0]-pt1[0])**2)
-
-
-def timeCost(car,dt,max_score):
-    def f(): 
-        return max_score - car.time/dt
-
-    return f
-
-
-def distanceCost(car1,car2,max_score,min_distance):
-    def f():
-        global cur_score
-        cur_score =  min(cur_score,max_score*(computeDistance(car1.state["position"],car2.state["position"])/min_distance))
-        return cur_score
-
-    return f
 
 ###################################################################################################################
 #Direction Writing Stuff
@@ -171,14 +146,6 @@ def writeTextToScreen(screen,text_lines,start_position,font_size,space_size):
     text = [font.render(l,1,white) for l in text_lines]
     for i,line in enumerate(text):
         screen.blit(line,(start_position[0],start_position[1]+font_size*i+space_size*i))
-
-
-def writeScore(screen,scoreFunction,start_position,font_size,space_size):
-    def f():
-        line = ["Maximise your Score","Score: {}".format(round(scoreFunction(),1))]
-        writeTextToScreen(screen,line,start_position,font_size,space_size)
-
-    return f
 
 
 def writeText(screen,text_list,start_position,font_size,space_size):
@@ -237,9 +204,7 @@ def runExperiment(experiment_order):
     #Initialise Simulator here because need state definition
 
     sim_position = (0,0)
-    #w,h = 1024,768
     w,h = 1200,800
-    #w,h = pyautogui.size()
     sim_dimensions = (w,h)
     sim = initialiseSimulator([lane_changer,lane_keeper],speed_limit,init_speeds=[init_speed,init_speed],lane_width=lane_width,dt=dt,debug=debug,sim_position=sim_position,sim_dimensions=sim_dimensions)
 
@@ -249,10 +214,6 @@ def runExperiment(experiment_order):
 
     ###########################################################################################
     #Write Instructions
-    init_score = 200
-    global cur_score
-    cur_score  = init_score
-
     pygame.init()
     g_sim = sim.g_sim
 
@@ -335,20 +296,15 @@ def runExperiment(experiment_order):
 
         ######################################################################
         #Set Graphic Simulator triggers
-        cur_score = init_score
-
         iteration_count = "Round: {}/{}".format(i+1,len(experiment_order))
 
         if lane_keeper_type == "aggressive":
             #idirective = "Get to the end of the lane as quickly as possible"
             directive = "Drive as if in a rush and stay in your lane"
-            score_function = timeCost(lane_keeper,dt,init_score)
         else:
             directive = "Drive cautiously and stay in your lane"
-            score_function = distanceCost(lane_keeper,lane_changer,init_score,veh_length)
         
         write_task  = writeText(screen,[iteration_count,directive],(int(w/2),int(h/5)),font_size,space_size)
-        #write_score = writeScore(screen,score_function,(int(w/2),int(h/5)+2*(font_size+space_size)),font_size,space_size)
         
         triggers = {trueFunc:write_instructions,trueFunc2:write_task}
         g_sim.triggers = {}

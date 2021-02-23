@@ -4,7 +4,6 @@ sys.path.insert(0,'../libraries/driving_simulator')
 import datetime
 import linear_controller_classes as lcc
 import math
-import pyautogui
 import pygame
 import simulator
 import vehicle_classes
@@ -179,8 +178,6 @@ def runExperiment(experiment_order):
     
     #################################################################################
     #Initialise Simulator here becayse need state definition
-    #w,h = pyautogui.size() #height and width of screen
-    #w,h = 1024,768
     w,h = 1200,800
     graphic_position = (0,0)
     graphic_dimensions = (w,h)
