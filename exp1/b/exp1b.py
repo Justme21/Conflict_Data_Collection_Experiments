@@ -63,6 +63,11 @@ def onLaneTrigger(ego_car, trigger_car):
     return f
 
 
+def computeDistance(pt1,pt2):
+     """Compute the L2 distance between two points"""
+     return math.sqrt((pt2[1]-pt1[1])**2 + (pt2[0]-pt1[0])**2)
+
+
 def radiusTrigger(ego_car,trigger_car,radius):
     #Triggered if trigger car is too close to ego car
     def f():
