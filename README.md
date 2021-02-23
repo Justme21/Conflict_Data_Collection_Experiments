@@ -18,7 +18,7 @@ This repository uses submodules, so you will need to clone it with the following
 git clone --recursive https://github.com/Justme21/Conflict_Data_Collection_Experiments.git
 ```
 
-Python 3 is required to run the experiments. To ensure you are able to run all the experiments, please look at the `requirements.txt` file, to make sure you have all the relevant libraries installed. You can also use the following commands in a UNIX-like terminal to install the required packages, provided you already have python 3 installed:
+Python 3.9 is required to run the experiments. To ensure you are able to run all the experiments, please look at the `requirements.txt` file, to make sure you have all the relevant libraries installed. You can also use the following commands in a UNIX-like terminal to install the required packages, provided you already have Python 3.9 installed:
 
 ```
 python3 -m venv env
